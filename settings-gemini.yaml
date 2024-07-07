@@ -1,0 +1,12 @@
+server:
+  env_name: ${APP_ENV:gemini}
+
+llm:
+  mode: gemini
+
+embedding:
+  mode: gemini
+
+gemini:
+  api_key: ${GOOGLE_API_KEY:}
+  model: ${MODEL:models/gemini-pro}

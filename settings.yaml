@@ -92,9 +92,14 @@ sagemaker:
   llm_endpoint_name: huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140
   embedding_endpoint_name: huggingface-pytorch-inference-2023-11-03-07-41-36-479
 
+gemini:
+  api_key: ${GOOGLE_API_KEY:}
+  model: ${MODEL:models/gemini-pro}
+  embedding_api_key: ${GOOGLE_API_KEY:}
+  
 openai:
   api_key: ${OPENAI_API_KEY:}
-  model: gpt-3.5-turbo
+  model: ${MODEL:gpt-3.5-turbo}
   embedding_api_key: ${OPENAI_API_KEY:}
 
 ollama:

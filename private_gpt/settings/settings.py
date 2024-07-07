@@ -82,7 +82,7 @@ class DataSettings(BaseModel):
 
 class LLMSettings(BaseModel):
     mode: Literal[
-        "llamacpp", "openai", "openailike", "azopenai", "sagemaker", "mock", "ollama"
+        "llamacpp", "openai", "gemini", "openailike", "azopenai", "sagemaker", "mock", "ollama"
     ]
     max_new_tokens: int = Field(
         256,
@@ -157,7 +157,7 @@ class HuggingFaceSettings(BaseModel):
 
 
 class EmbeddingSettings(BaseModel):
-    mode: Literal["huggingface", "openai", "azopenai", "sagemaker", "ollama", "mock"]
+    mode: Literal["huggingface", "openai", "gemini", "azopenai", "sagemaker", "ollama", "mock"]
     ingest_mode: Literal["simple", "batch", "parallel", "pipeline"] = Field(
         "simple",
         description=(
@@ -219,6 +219,29 @@ class OpenAISettings(BaseModel):
         description="OpenAI embedding Model to use. Example: 'text-embedding-3-large'.",
     )
 
+class GeminiSettings(BaseModel):
+    api_base: str = Field(
+        None,
+        description="Base URL of Gemini API. Example: 'https://api.gemini.com/v1'.",
+    )
+    api_key: str
+    model: str = Field(
+        "models/gemini-pro",
+        description="Gemini Model to use. Example: 'models/gemini-1.5-flash-001'.",
+    )
+    request_timeout: float = Field(
+        120.0,
+        description="Time elapsed until Gemini server times out the request. Default is 120s. Format is float. ",
+    )
+    embedding_api_base: str = Field(
+        None,
+        description="Base URL of Gemini API. Example: 'https://api.gemini.com/v1'.",
+    )
+    embedding_api_key: str
+    embedding_model: str = Field(
+        "models/embedding-001",
+        description="Gemini embedding Model to use. Example: 'models/text-embedding-004'.",
+    )
 
 class OllamaSettings(BaseModel):
     api_base: str = Field(
@@ -426,6 +449,7 @@ class Settings(BaseModel):
     huggingface: HuggingFaceSettings
     sagemaker: SagemakerSettings
     openai: OpenAISettings
+    gemini: GeminiSettings
     ollama: OllamaSettings
     azopenai: AzureOpenAISettings
     vectorstore: VectorstoreSettings

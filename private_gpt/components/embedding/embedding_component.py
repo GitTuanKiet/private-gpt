@@ -66,6 +66,22 @@ class EmbeddingComponent:
                     api_key=api_key,
                     model=model,
                 )
+            case "gemini":
+                try:
+                    from llama_index.embeddings.gemini import (  # type: ignore
+                        GeminiEmbedding,
+                    )
+                except ImportError as e:
+                    raise ImportError(
+                        "Gemini dependencies not found, install with `poetry install --extras embeddings-gemini`"
+                    ) from e
+
+                gemini_settings = settings.gemini
+                self.embedding_model = GeminiEmbedding(
+                    model_name=gemini_settings.embedding_model,
+                    base_url=gemini_settings.embedding_api_base,
+                    api_key=gemini_settings.api_key,
+                )
             case "ollama":
                 try:
                     from llama_index.embeddings.ollama import (  # type: ignore

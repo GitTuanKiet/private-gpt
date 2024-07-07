@@ -127,6 +127,20 @@ class LLMComponent:
                     timeout=openai_settings.request_timeout,
                     reuse_client=False,
                 )
+            case "gemini":
+                try:
+                    from llama_index.llms.gemini import Gemini  # type: ignore
+                except ImportError as e:
+                    raise ImportError(
+                        "Gemini dependencies not found, install with `poetry install --extras llms-gemini`"
+                    ) from e
+
+                gemini_settings = settings.gemini
+                self.llm = Gemini(
+                    api_base=gemini_settings.api_base,
+                    api_key=gemini_settings.api_key,
+                    model=gemini_settings.model,
+                )
             case "ollama":
                 try:
                     from llama_index.llms.ollama import Ollama  # type: ignore
